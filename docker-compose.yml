@@ -1,0 +1,87 @@
+version: '3.7'
+
+services:
+  db:
+    restart: unless-stopped
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    networks:
+     - backend
+  
+  redis:
+    restart: unless-stopped
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - backend
+      - frontend
+  
+  api:
+    restart: always
+    build:
+      context: ./api
+      dockerfile: DOCKERFILE
+    env_file:
+      - ./api/api.env
+    expose:
+      - "8000"
+    depends_on:
+      - db
+    volumes:
+      - ./api:/usr/src/api
+      - static-volume:/usr/src/api/static
+    networks: 
+      - backend
+      - frontend
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py makemigrations --noinput &&
+             python manage.py migrate --noinput &&
+             gunicorn olduka.wsgi:application -w 2 -b :8000 --reload"
+  
+  celery:
+    restart: always
+    build:
+      context: ./api
+      dockerfile: DOCKERFILE
+    env_file:
+      - ./api/api.env
+    volumes:
+      - ./api:/usr/src/api
+    depends_on:
+      - redis
+      - api
+    networks: 
+      - backend
+    command: >
+      sh -c "celery -A olduka worker -l info"
+  
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: DOCKERFILE
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+    volumes:
+      - static-volume:/usr/src/api/static
+    networks: 
+      - frontend
+
+volumes:
+  static-volume:
+  pgdata:
+  redisdata:
+
+networks: 
+  backend:
+  frontend:
