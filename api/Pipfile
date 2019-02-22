@@ -10,9 +10,14 @@ celery = {extras = ["redis"], version = "*"}
 "psycopg2" = "*"
 redis = "*"
 gunicorn = "*"
+djangorestframework = "*"
+djangorestframework-jwt = "*"
 
 [dev-packages]
 pylint = "*"
+factory-boy = "*"
+faker = "*"
+django-rest-swagger = "*"
 
 [requires]
 python_version = "3.6"
