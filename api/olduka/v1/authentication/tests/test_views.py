@@ -43,6 +43,42 @@ class CreateUserViewTests(APITestCase):
         )
 
 
+class AuthorizationTests(APITestCase):
+
+    def setUp(self):
+        self.user_profile = authentication_factories.UserProfileFactory.create()
+        self.user_details = dict(
+            username=self.user_profile.user.username,
+            password="12345"
+        )
+        self.user_profile.user.set_password(self.user_details['password'])
+        self.user_profile.user.save()
+        self.url = reverse('v1:login')
+        self.login_response = self.client.post(
+            self.url, self.user_details, format='json')
+        self.auth_token = self.login_response.data['token']
+        self.client.credentials(
+            HTTP_AUTHORIZATION='JWT {}'.format(self.auth_token))
+
+    def test_logging_in(self):
+        self.assertEqual(200, self.login_response.status_code)
+        self.assertCountEqual(['token'], self.login_response.data)
+        response = self.client.get(
+            reverse('v1:user', kwargs={'pk': self.user_profile.user.id}),
+            format='json'
+        )
+        self.assertEqual(200, response.status_code)
+
+    def test_logging_out(self):
+        response = self.client.get(reverse('v1:logout'), format='json')
+        self.assertEqual(200, response.status_code)
+        response = self.client.get(
+            reverse('v1:user', kwargs={'pk': self.user_profile.user.id}),
+            format='json'
+        )
+        self.assertEqual(401, response.status_code)
+
+
 class RetrieveUpdateDestroyUserViewTests(APITestCase):
 
     def setUp(self):
