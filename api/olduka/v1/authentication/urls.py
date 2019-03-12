@@ -5,6 +5,7 @@ from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 urlpatterns = [
     path('login/', obtain_jwt_token, name='login'),
     path('token/refresh/', refresh_jwt_token, name='refresh-token'),
+    path('logout/', user_views.LogoutUserView.as_view(), name='logout'),
     path(
         'user/create/',
         user_views.CreateUserView.as_view(),
