@@ -1,8 +1,7 @@
 import factory
+import olduka.v1.authentication.models as authentication_models
 from django.contrib.auth.models import User
 from factory import fuzzy
-
-import olduka.v1.authentication.models as authentication_models
 
 
 class UserFactory(factory.DjangoModelFactory):
