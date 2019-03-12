@@ -18,6 +18,7 @@ pylint = "*"
 factory-boy = "*"
 faker = "*"
 django-rest-swagger = "*"
+"pep8" = "*"
 
 [requires]
 python_version = "3.6"
