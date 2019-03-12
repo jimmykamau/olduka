@@ -184,6 +184,7 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
+    'JWT_GET_USER_SECRET_KEY': 'olduka.v1.authentication.utils.get_jwt_secret'
 }
 
 
