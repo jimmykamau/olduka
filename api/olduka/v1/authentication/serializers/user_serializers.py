@@ -1,14 +1,13 @@
+import olduka.v1.authentication.models as authentication_models
 from django.contrib.auth.models import User
 from rest_framework import serializers
-
-import olduka.v1.authentication.models as authentication_models
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = authentication_models.UserProfile
-        exclude = ('user',)
+        exclude = ('user', 'jwt_secret')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -42,8 +41,8 @@ class UserSerializer(serializers.ModelSerializer):
         return email
 
     def create(self, validated_data):
-        password = validated_data.pop('password')
-        user_profile = validated_data.pop('user_profile')
+        password = validated_data.pop('password', None)
+        user_profile = validated_data.pop('user_profile', None)
         if validated_data.get('username') is None:
             validated_data['username'] = validated_data['email']
         user = User.objects.create(**validated_data)
@@ -57,7 +56,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        password = validated_data.pop('password')
+        password = validated_data.pop('password', None)
         instance.__dict__.update(validated_data)
         if password:
             instance.set_password(password)
