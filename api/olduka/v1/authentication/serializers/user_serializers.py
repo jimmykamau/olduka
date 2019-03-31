@@ -1,6 +1,8 @@
-import olduka.v1.authentication.models as authentication_models
 from django.contrib.auth.models import User
 from rest_framework import serializers
+
+import olduka.v1.authentication.models as authentication_models
+import olduka.v1.authentication.utils as authentication_utils
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -60,6 +62,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.__dict__.update(validated_data)
         if password:
             instance.set_password(password)
+            authentication_utils.send_password_changed_email(instance)
         instance.save()
         user_profile = validated_data.get('user_profile')
         if user_profile:
