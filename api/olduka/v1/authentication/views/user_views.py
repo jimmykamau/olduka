@@ -1,8 +1,9 @@
+from django.contrib.auth.models import User
+from rest_framework import generics, permissions, response, status
+
 import olduka.v1.authentication.models as authentication_models
 import olduka.v1.authentication.serializers.user_serializers as user_serializers
 import olduka.v1.authentication.utils as authentication_utils
-from django.contrib.auth.models import User
-from rest_framework import generics, permissions, response, status
 
 
 class CreateUserView(generics.CreateAPIView):

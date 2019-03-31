@@ -1,6 +1,7 @@
-import olduka.v1.authentication.views.user_views as user_views
 from django.urls import include, path
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
+
+import olduka.v1.authentication.views.user_views as user_views
 
 urlpatterns = [
     path('login/', obtain_jwt_token, name='login'),
