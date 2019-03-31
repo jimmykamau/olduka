@@ -12,6 +12,7 @@ redis = "*"
 gunicorn = "*"
 djangorestframework = "*"
 djangorestframework-jwt = "*"
+dj-email-url = "*"
 
 [dev-packages]
 pylint = "*"
