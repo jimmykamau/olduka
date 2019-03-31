@@ -1,9 +1,10 @@
 import factory
-import olduka.v1.authentication.models as authentication_models
-import olduka.v1.authentication.tests.factories as authentication_factories
 from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework.test import APITestCase
+
+import olduka.v1.authentication.models as authentication_models
+import olduka.v1.authentication.tests.factories as authentication_factories
 
 
 class CreateUserViewTests(APITestCase):
@@ -107,6 +108,15 @@ class RetrieveUpdateDestroyUserViewTests(APITestCase):
                 last_name=new_user_data['last_name']
             )
         )
+
+    def test_change_password(self):
+        """
+        This is mostly used to check if Celery is sending password-change emails correctly.
+        Confirm this through the Celery logs.
+        """
+        new_user_data = dict(password="abcde")
+        response = self.client.patch(self.url, new_user_data, format='json')
+        self.assertEqual(200, response.status_code)
 
     def test_delete_user(self):
         self.client.force_authenticate(user=None)
