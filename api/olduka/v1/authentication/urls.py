@@ -1,6 +1,7 @@
 from django.urls import include, path
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
+import olduka.v1.authentication.views.auth_views as auth_views
 import olduka.v1.authentication.views.user_views as user_views
 
 urlpatterns = [
@@ -16,5 +17,10 @@ urlpatterns = [
         'user/<slug:pk>/',
         user_views.RetrieveUpdateDestroyUserView.as_view(),
         name='user'
+    ),
+    path(
+        'verify-email/',
+        auth_views.ValidateEmailView.as_view(),
+        name='validate-email'
     )
 ]
