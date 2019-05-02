@@ -55,6 +55,7 @@ class UserSerializer(serializers.ModelSerializer):
         authentication_models.UserProfile.objects.create(
             user=user, **user_profile
         )
+        authentication_utils.send_account_confirmation_email(user)
         return user
 
     def update(self, instance, validated_data):
