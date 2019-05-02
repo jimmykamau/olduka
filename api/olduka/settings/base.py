@@ -237,4 +237,8 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
+EMAIL_VERIFICATION_SUCCESS_URL = "/email/success/"
+EMAIL_VERIFICATION_ERROR_URL = "/email/error/"
+TOKEN_EXPIRED_URL = "/email/token-expired/"
+
 SITE_ID = 1
