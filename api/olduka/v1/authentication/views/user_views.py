@@ -36,6 +36,6 @@ class LogoutUserView(generics.GenericAPIView):
     def get(self, request):
         authentication_utils.change_jwt_secret(request.user)
         return response.Response(
-            {"message": "User successfully logged out"},
+            {"detail": "User successfully logged out"},
             status=status.HTTP_200_OK
         )
