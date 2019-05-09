@@ -152,3 +152,23 @@ class RetrieveUpdateDestroyUserViewTests(APITestCase):
             reverse('v1:login'), user_details, format='json'
         )
         self.assertEqual(400, auth_token_response.status_code)
+
+
+class ValidateEmailViewTests(APITestCase):
+
+    def setUp(self):
+        self.user_profile = authentication_factories.UserProfileFactory.create()
+        self.url = reverse('v1:validate-email')
+
+    def test_validate_email(self):
+        """
+        Checks if the task is executed without errors
+        """
+        email_address = dict(email=self.user_profile.user.email)
+        response = self.client.post(self.url, email_address, format='json')
+        self.assertEqual(200, response.status_code)
+
+    def test_validate_unregistered_email(self):
+        email_address = dict(email="jdoe@example.com")
+        response = self.client.post(self.url, email_address, format='json')
+        self.assertEqual(400, response.status_code)
