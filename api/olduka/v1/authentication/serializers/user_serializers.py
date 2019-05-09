@@ -69,3 +69,16 @@ class UserSerializer(serializers.ModelSerializer):
         if user_profile:
             instance.user_profile.__dict__.update(user_profile)
         return instance
+
+
+class EmailValidationSerializer(serializers.Serializer):
+
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        email = value.lower()
+        if not User.objects.filter(email=email).exists():
+            raise serializers.ValidationError(
+                "The email address provided isn't registered to any account"
+            )
+        return email
