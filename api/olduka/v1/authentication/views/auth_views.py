@@ -15,6 +15,7 @@ class ValidateEmailView(generics.GenericAPIView):
     Validate a user's email address
     """
     permission_classes = (permissions.AllowAny,)
+    serializer_class = user_serializers.EmailValidationSerializer
 
     def get(self, request):
         error_url = request.build_absolute_uri(
