@@ -46,3 +46,16 @@ def send_account_confirmation_email(user, from_address=settings.EMAIL_HOST_USER,
         from_address, [user_email_address]
     )
     olduka_tasks.send_email.delay(email_data)
+
+
+def send_account_details_changed_email(user, from_address=settings.EMAIL_HOST_USER,
+                                       subject="Your account details have been updated"):
+    current_site = Site.objects.get_current()
+    email_data = (
+        subject,
+        "Your {} account details have been updated."
+        "Kindly contact us immediately if you haven't recently updated them.".format(
+            current_site.name),
+        from_address, [user.email]
+    )
+    olduka_tasks.send_email.delay(email_data)

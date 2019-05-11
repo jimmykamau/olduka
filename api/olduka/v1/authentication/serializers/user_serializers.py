@@ -68,6 +68,7 @@ class UserSerializer(serializers.ModelSerializer):
         user_profile = validated_data.get('user_profile')
         if user_profile:
             instance.user_profile.__dict__.update(user_profile)
+        authentication_utils.send_account_details_changed_email(instance)
         return instance
 
 
