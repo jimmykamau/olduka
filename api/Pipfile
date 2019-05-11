@@ -6,18 +6,22 @@ name = "pypi"
 [packages]
 django = "*"
 dj-database-url = "*"
-celery = {extras = ["redis"], version = "*"}
+celery = {extras = ["redis"],version = "*"}
 "psycopg2" = "*"
 redis = "*"
 gunicorn = "*"
 djangorestframework = "*"
 djangorestframework-jwt = "*"
+dj-email-url = "*"
+itsdangerous = "*"
 
 [dev-packages]
 pylint = "*"
 factory-boy = "*"
 faker = "*"
 django-rest-swagger = "*"
+"pep8" = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.6"

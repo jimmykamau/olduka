@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 import dj_database_url
+import dj_email_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,6 +37,15 @@ ADMINS = [
     ('John Doe', 'jdoe@example.com')
 ]
 
+email_config = dj_email_url.parse('console://')
+EMAIL_FILE_PATH = email_config['EMAIL_FILE_PATH']
+EMAIL_HOST_USER = email_config['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = email_config['EMAIL_HOST_PASSWORD']
+EMAIL_HOST = email_config['EMAIL_HOST']
+EMAIL_PORT = email_config['EMAIL_PORT']
+EMAIL_BACKEND = email_config['EMAIL_BACKEND']
+EMAIL_USE_TLS = email_config['EMAIL_USE_TLS']
+EMAIL_USE_SSL = email_config['EMAIL_USE_SSL']
 
 # Application definition
 
@@ -184,6 +194,7 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
+    'JWT_GET_USER_SECRET_KEY': 'olduka.v1.authentication.utils.get_jwt_secret'
 }
 
 
@@ -225,5 +236,9 @@ CELERY_RESULT_BACKEND = os.environ.get(
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+EMAIL_VERIFICATION_SUCCESS_URL = "/email/success/"
+EMAIL_VERIFICATION_ERROR_URL = "/email/error/"
+TOKEN_EXPIRED_URL = "/email/token-expired/"
 
 SITE_ID = 1

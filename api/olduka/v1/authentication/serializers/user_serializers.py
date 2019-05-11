@@ -2,13 +2,14 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 import olduka.v1.authentication.models as authentication_models
+import olduka.v1.authentication.utils as authentication_utils
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = authentication_models.UserProfile
-        exclude = ('user',)
+        exclude = ('user', 'jwt_secret')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -42,8 +43,8 @@ class UserSerializer(serializers.ModelSerializer):
         return email
 
     def create(self, validated_data):
-        password = validated_data.pop('password')
-        user_profile = validated_data.pop('user_profile')
+        password = validated_data.pop('password', None)
+        user_profile = validated_data.pop('user_profile', None)
         if validated_data.get('username') is None:
             validated_data['username'] = validated_data['email']
         user = User.objects.create(**validated_data)
@@ -54,15 +55,31 @@ class UserSerializer(serializers.ModelSerializer):
         authentication_models.UserProfile.objects.create(
             user=user, **user_profile
         )
+        authentication_utils.send_account_confirmation_email(user)
         return user
 
     def update(self, instance, validated_data):
-        password = validated_data.pop('password')
+        password = validated_data.pop('password', None)
         instance.__dict__.update(validated_data)
         if password:
             instance.set_password(password)
+            authentication_utils.send_password_changed_email(instance)
         instance.save()
         user_profile = validated_data.get('user_profile')
         if user_profile:
             instance.user_profile.__dict__.update(user_profile)
+        authentication_utils.send_account_details_changed_email(instance)
         return instance
+
+
+class EmailValidationSerializer(serializers.Serializer):
+
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        email = value.lower()
+        if not User.objects.filter(email=email).exists():
+            raise serializers.ValidationError(
+                "The email address provided isn't registered to any account"
+            )
+        return email
