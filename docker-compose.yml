@@ -24,9 +24,6 @@ services:
   
   api:
     restart: always
-    build:
-      context: ./api
-      dockerfile: DOCKERFILE
     env_file:
       - ./api/api.env
     expose:
@@ -39,11 +36,6 @@ services:
     networks: 
       - backend
       - frontend
-    command: >
-      sh -c "python manage.py collectstatic --noinput &&
-             python manage.py makemigrations --noinput &&
-             python manage.py migrate --noinput &&
-             gunicorn olduka.wsgi:application -w 2 -b :8000 --reload"
   
   celery:
     restart: always
@@ -62,18 +54,23 @@ services:
     command: >
       sh -c "celery -A olduka worker -l info"
   
+  front_end:
+    restart: always
+    networks:
+      - frontend
+      - backend
+  
   nginx:
     restart: always
-    build:
-      context: ./nginx
-      dockerfile: DOCKERFILE
     ports:
       - "80:80"
       - "443:443"
     depends_on:
       - api
+      - front_end
     volumes:
       - static-volume:/usr/src/api/static
+      - front_end:/usr/src/front_end
     networks: 
       - frontend
 
@@ -81,6 +78,7 @@ volumes:
   static-volume:
   pgdata:
   redisdata:
+  front_end:
 
 networks: 
   backend:
