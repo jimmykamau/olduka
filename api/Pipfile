@@ -14,12 +14,12 @@ djangorestframework = "*"
 djangorestframework-jwt = "*"
 dj-email-url = "*"
 itsdangerous = "*"
+django-rest-swagger = "*"
 
 [dev-packages]
 pylint = "*"
 factory-boy = "*"
 faker = "*"
-django-rest-swagger = "*"
 "pep8" = "*"
 autopep8 = "*"
 
