@@ -41,7 +41,7 @@ services:
     restart: always
     build:
       context: ./api
-      dockerfile: DOCKERFILE
+      dockerfile: DOCKERFILE-CELERY
     env_file:
       - ./api/api.env
     volumes:
@@ -55,7 +55,7 @@ services:
       sh -c "celery -A olduka worker -l info"
   
   front_end:
-    restart: always
+    restart: on-failure
     networks:
       - frontend
       - backend
@@ -70,7 +70,6 @@ services:
       - front_end
     volumes:
       - static-volume:/usr/src/api/static
-      - front_end:/usr/src/front_end
     networks: 
       - frontend
 
@@ -78,7 +77,7 @@ volumes:
   static-volume:
   pgdata:
   redisdata:
-  front_end:
+  front-end:
 
 networks: 
   backend:

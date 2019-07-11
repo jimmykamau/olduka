@@ -22,6 +22,10 @@ class RetrieveUpdateDestroyUserView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = user_serializers.UserSerializer
     queryset = User.objects.all()
 
+    def get_queryset(self):
+        user = self.request.user
+        return self.queryset.filter(id=user.id)
+
     def perform_destroy(self, instance):
         instance.is_active = False
         instance.save()

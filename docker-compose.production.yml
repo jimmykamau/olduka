@@ -17,9 +17,11 @@ services:
       dockerfile: DOCKERFILE
       target: production_stage
     volumes:
-      - front_end:/usr/src/front_end
+      - front-end:/usr/src/front_end
 
   nginx:
     build:
       context: ./nginx
       dockerfile: DOCKERFILE
+    volumes:
+      - front-end:/usr/src/front_end

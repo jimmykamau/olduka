@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
+import datetime
 import os
 
 import dj_database_url
@@ -194,7 +195,9 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
-    'JWT_GET_USER_SECRET_KEY': 'olduka.v1.authentication.utils.get_jwt_secret'
+    'JWT_GET_USER_SECRET_KEY': 'olduka.v1.authentication.utils.get_jwt_secret',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'olduka.v1.utils.jwt_response_payload_handler',
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1)
 }
 
 
@@ -237,7 +240,7 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
-EMAIL_VERIFICATION_SUCCESS_URL = "/email/success/"
+EMAIL_VERIFICATION_SUCCESS_URL = "/login?emailConfirmation=true"
 EMAIL_VERIFICATION_ERROR_URL = "/email/error/"
 TOKEN_EXPIRED_URL = "/email/token-expired/"
 

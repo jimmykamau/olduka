@@ -1,9 +1,9 @@
 FROM node:latest
 
 WORKDIR /usr/src/front_end/olduka
-
-COPY olduka/package*.json ./
-RUN npm install
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+COPY olduka/package*.json olduka/yarn.lock ./
+RUN yarn install
 
 WORKDIR /usr/src/front_end
 COPY . ./
