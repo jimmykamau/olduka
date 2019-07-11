@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'first_name', 'last_name', 'email',
+            'id', 'first_name', 'last_name', 'email',
             'password', 'user_profile'
         )
         required_fields = (
@@ -60,14 +60,15 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)
+        user_profile = validated_data.pop('user_profile', None)
         instance.__dict__.update(validated_data)
         if password:
             instance.set_password(password)
             authentication_utils.send_password_changed_email(instance)
-        instance.save()
-        user_profile = validated_data.get('user_profile')
         if user_profile:
             instance.user_profile.__dict__.update(user_profile)
+            instance.user_profile.save()
+        instance.save()
         authentication_utils.send_account_details_changed_email(instance)
         return instance
 
