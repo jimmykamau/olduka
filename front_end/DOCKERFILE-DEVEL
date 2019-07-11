@@ -1,0 +1,11 @@
+FROM node:latest
+
+WORKDIR /usr/src/front_end/olduka
+
+COPY olduka/package*.json ./
+RUN npm install
+
+WORKDIR /usr/src/front_end
+COPY . ./
+
+WORKDIR /usr/src/front_end/olduka

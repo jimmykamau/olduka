@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: DOCKERFILE-DEVEL
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+              python manage.py makemigrations --noinput &&
+              python manage.py migrate --noinput &&
+              gunicorn olduka.wsgi:application -w 2 -b :8000 --reload"
+
+  front_end:
+    build:
+      context: ./front_end
+      dockerfile: DOCKERFILE-DEVEL
+    expose:
+      - "8080"
+    volumes:
+      - ./front_end:/usr/src/front_end
+    command: >
+      sh -c "npm run serve"
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: DOCKERFILE-DEVEL

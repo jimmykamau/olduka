@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: DOCKERFILE
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+              python manage.py makemigrations --noinput &&
+              python manage.py migrate --noinput &&
+              gunicorn olduka.wsgi:application -w 2 -b :8000"
+
+  front_end:
+    build:
+      context: ./front_end
+      dockerfile: DOCKERFILE
+      target: production_stage
+    volumes:
+      - front_end:/usr/src/front_end
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: DOCKERFILE

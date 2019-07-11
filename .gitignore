@@ -1,9 +1,3 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-
 # Misc
 .DS_Store
 *.vscode/
-
-# Environments
-api.env

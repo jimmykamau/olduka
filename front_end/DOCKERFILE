@@ -1,0 +1,11 @@
+FROM node:latest AS build_stage
+WORKDIR /usr/src/front_end/olduka
+COPY olduka/package*.json ./
+RUN npm install
+WORKDIR /usr/src/front_end
+COPY . ./
+WORKDIR /usr/src/front_end/olduka
+RUN npm run build
+
+FROM node:alpine AS production_stage
+COPY --from=build_stage /usr/src/front_end/olduka/dist /usr/src/front_end
