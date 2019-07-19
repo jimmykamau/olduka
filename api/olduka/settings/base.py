@@ -99,9 +99,21 @@ WSGI_APPLICATION = 'olduka.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+DATABASE_ROUTERS = ['olduka.dbrouter.DBRouter']
+DATABASE_APPS_MAPPING = {
+    'mongo': 'mongo_db'
+}
 
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': dj_database_url.config(),
+    'mongo_db': {
+        'ENGINE': 'djongo',
+        'USER': os.environ['MONGO_USERNAME'],
+        'PASSWORD': os.environ['MONGO_PASSWORD'],
+        'NAME': os.environ['MONGO_DATABASE'],
+        'HOST': os.environ['MONGO_HOST'],
+        'PORT': int(os.environ['MONGO_PORT'])
+    }
 }
 
 
