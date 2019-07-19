@@ -15,6 +15,7 @@ djangorestframework-jwt = "*"
 dj-email-url = "*"
 itsdangerous = "*"
 django-rest-swagger = "*"
+djongo = "*"
 
 [dev-packages]
 pylint = "*"
