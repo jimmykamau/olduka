@@ -8,7 +8,7 @@ class Category(models.Model):
     image_url = models.URLField(null=True, blank=True)
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE,
-        null=True, blank=True
+        null=True, blank=True, related_name='subcategory'
     )
 
     def __str__(self):
@@ -34,7 +34,8 @@ class Item(models.Model):
     _id = models.ObjectIdField()
     category = models.ArrayReferenceField(
         to=Category,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='category_item'
     )
     name = models.CharField(max_length=100)
     description = models.TextField()
