@@ -6,5 +6,6 @@ schema_view = get_swagger_view(title='Olduka')
 
 urlpatterns = [
     path('', schema_view),
-    path('auth/', include('olduka.v1.authentication.urls'))
+    path('auth/', include('olduka.v1.authentication.urls')),
+    path('product/', include('olduka.v1.product.urls'))
 ]

@@ -63,7 +63,7 @@ class AuthorizationTests(APITestCase):
 
     def test_logging_in(self):
         self.assertEqual(200, self.login_response.status_code)
-        self.assertCountEqual(['token'], self.login_response.data)
+        self.assertCountEqual(['token', 'user'], self.login_response.data)
         response = self.client.get(
             reverse('v1:user', kwargs={'pk': self.user_profile.user.id}),
             format='json'

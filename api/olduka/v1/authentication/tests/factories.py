@@ -1,6 +1,5 @@
 import factory
 from django.contrib.auth.models import User
-from factory import fuzzy
 
 import olduka.v1.authentication.models as authentication_models
 
@@ -13,7 +12,7 @@ class UserFactory(factory.DjangoModelFactory):
     username = factory.Faker('user_name')
     first_name = factory.Faker('first_name')
     last_name = factory.Faker('last_name')
-    email = factory.Faker('email')
+    email = factory.Faker('ascii_safe_email')
     password = factory.PostGenerationMethodCall(
         'set_password', 'password'
     )

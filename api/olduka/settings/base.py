@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
 
     'olduka.v1.authentication',
+    'olduka.v1.product'
 ]
 
 MIDDLEWARE = [
@@ -201,6 +202,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_VERSION': 'v1',
     'ALLOWED_VERSIONS': ('v1'),
 }
