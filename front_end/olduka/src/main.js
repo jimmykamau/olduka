@@ -28,10 +28,13 @@ if (userToken) {
       store.dispatch('auth/refreshToken').catch(
         err => {
           store.dispatch('auth/logout')
-      })
+        }
+      )
     }
   )
 }
+
+store.dispatch('product/getCategories')
 
 Vue.component('navbar', Navbar)
 
