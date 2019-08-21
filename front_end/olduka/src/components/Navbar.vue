@@ -14,23 +14,15 @@
 
                     <div class="uk-navbar-center">
 
-                        <ul class="uk-navbar-nav uk-visible@m">
+                        <ul class="uk-navbar-nav uk-visible@m" v-for="category in productCategories" :key="category._id">
                             <li>
-                                <a href="#">Parent</a>
-                                <div class="uk-navbar-dropdown">
-                                    <ul class="uk-nav uk-navbar-dropdown-nav">
-                                        <li class="uk-active"><a href="#">Active</a></li>
-                                        <li><a href="#">Item</a></li>
-                                        <li class="uk-nav-header">Header</li>
-                                        <li><a href="#">Item</a></li>
-                                        <li><a href="#">Item</a></li>
-                                        <li class="uk-nav-divider"></li>
-                                        <li><a href="#">Item</a></li>
-                                    </ul>
-                                </div>
+                              <a :href="`/category/${category._id}/items`">{{ category.name }}</a>
+                              <div class="uk-navbar-dropdown" v-if="category.subcategory.length">
+                                <ul class="uk-nav uk-navbar-dropdown-nav" v-for="subcategory in category.subcategory" :key="subcategory._id">
+                                  <router-link :to="`/category/${subcategory._id}/items`" tag="li"><a>{{ subcategory.name }}</a></router-link>
+                                </ul>
+                              </div>
                             </li>
-                            <li><a href="/">Documentation</a></li>
-                            <router-link to="/" tag="li"><a>Changelog</a></router-link>
                         </ul>
 
                     </div>
@@ -94,10 +86,9 @@
                         <router-link class="uk-button uk-button-default tm-button-default" to="/signup" active-class="page-active">Sign Up</router-link>
                     </ul>
 
-                    <!-- <ul class="uk-nav uk-nav-default tm-nav uk-margin-top" v-for="(pages, category, index) in navigation">
-                        <li class="uk-nav-header">{{category}}</li>
-                        <li v-for="(p, label) in pages" exact><a :href="'./'+p">{{label}}</a></li>
-                    </ul> -->
+                    <ul class="uk-nav uk-nav-default tm-nav uk-margin-top" v-for="category in productCategories" :key="category._id">
+                        <li><a href="#">{{ category.name }}</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -114,6 +105,9 @@ export default {
     }),
     ...mapGetters('auth', {
       isLoggedIn: 'isLoggedIn'
+    }),
+    ...mapGetters('product', {
+      productCategories: 'productCategories'
     })
   },
   methods: {
