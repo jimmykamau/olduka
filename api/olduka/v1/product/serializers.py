@@ -38,7 +38,7 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = product_models.Item
         fields = (
-            '_id', 'category', 'name',
+            '_id', 'category', 'name', 'quantity',
             'description', 'images', 'price'
         )
 
