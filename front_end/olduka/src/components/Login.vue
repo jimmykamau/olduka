@@ -13,7 +13,7 @@
         </div>
         <form class="uk-form-stacked" v-on:submit.prevent>
             <div class="uk-margin">
-                <label for="email" class="uk-from-label">Email address</label>
+                <label for="email" class="uk-form-label">Email address</label>
                 <input id="email" required class="uk-input" type="email" v-model="credentials.username">
             </div>
             <div class="uk-margin">

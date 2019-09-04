@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="uk-margin">
-                <label for="email" class="uk-from-label">Email address *</label>
+                <label for="email" class="uk-form-label">Email address *</label>
                 <input id="email" required class="uk-input" type="email" v-model="credentials.email">
             </div>
             <div class="uk-margin">
@@ -31,7 +31,7 @@
                 <input id="password" required class="uk-input" v-model="credentials.password" type="password">
             </div>
             <div class="uk-margin">
-                <label for="mobile" class="uk-from-label">Mobile number</label>
+                <label for="mobile" class="uk-form-label">Mobile number</label>
                 <input id="mobile" class="uk-input" type="tel" v-model="credentials.user_profile.mobile">
             </div>
             <p class="uk-text-right">
