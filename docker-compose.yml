@@ -37,7 +37,7 @@ services:
       - frontend
   
   api:
-    restart: always
+    restart: unless-stopped
     env_file:
       - ./api/api.env
     expose:
@@ -53,7 +53,7 @@ services:
       - frontend
   
   celery:
-    restart: always
+    restart: on-failure
     build:
       context: ./api
       dockerfile: DOCKERFILE-CELERY
