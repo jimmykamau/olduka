@@ -3,7 +3,8 @@ import VueCookies from 'vue-cookies'
 
 const state = {
   productCategories: VueCookies.get('productCategories') || [],
-  categoryItems: {}
+  categoryItems: {},
+  currentItem: {}
 }
 
 const mutations = {
@@ -13,6 +14,9 @@ const mutations = {
   },
   updateCategoryItems (state, items) {
     state.categoryItems = items
+  },
+  updateCurrentItemDetails (state, item) {
+    state.currentItem = item
   }
 }
 
@@ -44,12 +48,27 @@ const actions = {
         reject(err)
       })
     })
+  },
+  getItemDetails ({ commit }, itemID) {
+    return new Promise((resolve, reject) => {
+      axios({
+        url: `product/item/${itemID}/`,
+        method: 'GET'
+      }).then(resp => {
+        const itemDetails = resp.data
+        commit('updateCurrentItemDetails', itemDetails)
+        resolve(resp)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
 }
 
 const getters = {
   productCategories: state => state.productCategories,
-  categoryItems: state => state.categoryItems
+  categoryItems: state => state.categoryItems,
+  currentItem: state => state.currentItem
 }
 
 export default {
