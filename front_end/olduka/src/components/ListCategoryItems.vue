@@ -6,20 +6,20 @@
     <div v-else>
       <div uk-grid="masonry: true" class="uk-flex-center">
         <div class="uk-flex uk-flex-center" v-for="item in categoryItems.category_item" :key="item._id">
-          <div class="uk-card uk-card-hover">
+          <router-link :to="`/item/${item._id}`" class="uk-card uk-card-hover uk-link-toggle">
             <div class="uk-card-media-top">
               <img :src="item.images[0].image_url">
             </div>
             <div class="uk-card-body">
-              <h3 class="uk-card-title">{{ item.name }}</h3>
+              <h3 class="uk-card-title"><span class="uk-link-heading">{{ item.name }}</span></h3>
               <div v-if="item.price.discount > 0">
-                <p><s><em> KES {{ item.price.price }}</em></s> KES {{ item.price.price - item.price.discount }}</p>
+                <p><s><em><b> KES {{ item.price.price }}</b></em></s><b> KES {{ item.price.price - item.price.discount }}</b></p>
               </div>
               <div v-else>
-                <p>KES {{ item.price.price }}</p>
+                <p><b>KES {{ item.price.price }}</b></p>
               </div>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
