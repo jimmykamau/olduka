@@ -1,10 +1,9 @@
-import factory
 from django.urls import reverse
 from rest_framework.test import APITestCase
 
 import olduka.v1.product.tests.factories as product_factories
+import olduka.v1.utils as base_utils
 from olduka.v1.product import logger
-import olduka.v1.product.utils as product_utils
 
 
 class MongoDBTestClass(APITestCase):
@@ -33,7 +32,7 @@ class GetCategoryViewTests(MongoDBTestClass):
         self.url = reverse(
             'v1:get-category',
             kwargs={
-                'pk': product_utils.get_object_id_value(self.category)
+                'pk': base_utils.get_object_id_value(self.category)
             }
         )
     
