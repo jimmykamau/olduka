@@ -40,7 +40,7 @@ class ProductImageFactory(factory.DjangoModelFactory):
 
     image_url = factory.Faker('image_url')
 
-
+#  TODO: Check why this keeps returning None
 class ItemFactory(factory.DjangoModelFactory):
 
     class Meta:
