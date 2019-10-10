@@ -20,12 +20,6 @@ class CreateCartViewTests(MongoDBTestClass):
         self.cart = cart_factories.CartFactory(user=self.user_profile.user)
         self.cart_id = base_utils.get_object_id_value(self.cart)
         self.url = reverse('v1:create-cart')
-        self.url_modify = reverse(
-            'v1:modify-cart',
-            kwargs={
-                'pk': self.cart_id
-            }
-        )
     
     def tearDown(self):
         self.client.force_authenticate(user=None)
@@ -38,16 +32,31 @@ class CreateCartViewTests(MongoDBTestClass):
         self.assertEqual(
             self.cart_id, response.data['_id']
         )
+
+
+class ModifyCartViewTests(MongoDBTestClass):
+
+    def setUp(self):
+        self.user_profile = auth_factories.UserProfileFactory()
+        self.client.force_authenticate(user=self.user_profile.user)
+        self.cart = cart_factories.CartFactory(user=self.user_profile.user)
+        self.cart_id = base_utils.get_object_id_value(self.cart)
+        self.url = reverse(
+            'v1:modify-cart',
+            kwargs={
+                'pk': self.cart_id
+            }
+        )
     
     def test_retrieve_cart(self):
-        response = self.client.get(self.url_modify, format='json')
+        response = self.client.get(self.url, format='json')
         self.assertEqual(200, response.status_code)
         self.assertCountEqual(
             ['_id', 'user', 'items'], response.data
         )
     
     def test_delete_cart(self):
-        response = self.client.delete(self.url_modify, format='json')
+        response = self.client.delete(self.url, format='json')
         self.assertEqual(204, response.status_code)
         self.assertFalse(
             cart_models.Cart.objects.filter(_id=self.cart_id).exists()
