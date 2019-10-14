@@ -16,11 +16,10 @@ dj-email-url = "*"
 itsdangerous = "*"
 django-rest-swagger = "*"
 djongo = "*"
+factory-boy = "*"
 
 [dev-packages]
 pylint = "*"
-factory-boy = "*"
-faker = "*"
 "pep8" = "*"
 autopep8 = "*"
 

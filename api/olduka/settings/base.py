@@ -64,7 +64,8 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
 
     'olduka.v1.authentication',
-    'olduka.v1.product'
+    'olduka.v1.product',
+    'olduka.v1.cart'
 ]
 
 MIDDLEWARE = [

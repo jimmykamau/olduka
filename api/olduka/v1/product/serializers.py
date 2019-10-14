@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
 import olduka.v1.product.models as product_models
-import olduka.v1.product.utils as product_utils
 import olduka.v1.serializers as base_serializers
+import olduka.v1.utils as base_utils
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -17,7 +17,7 @@ class CategorySerializer(serializers.ModelSerializer):
         )
 
     def get__id(self, obj):
-        return product_utils.get_object_id_value(obj)
+        return base_utils.get_object_id_value(obj)
 
 
 class PriceSerializer(serializers.Serializer):
@@ -29,11 +29,11 @@ class ProductImageSerializer(serializers.Serializer):
     image_url = serializers.URLField()
 
 
-class ItemSerializer(serializers.ModelSerializer):
-    _id = serializers.SerializerMethodField()
-    category = CategorySerializer(many=True)
-    images = ProductImageSerializer(many=True)
-    price = PriceSerializer()
+class ItemSerializer(base_serializers.DynamicFieldsModelSerializer):
+    _id = serializers.CharField()
+    category = CategorySerializer(many=True, required=False)
+    images = ProductImageSerializer(many=True, required=False)
+    price = PriceSerializer(required=False)
 
     class Meta:
         model = product_models.Item
@@ -41,9 +41,6 @@ class ItemSerializer(serializers.ModelSerializer):
             '_id', 'category', 'name', 'quantity',
             'description', 'images', 'price'
         )
-
-    def get__id(self, obj):
-        return product_utils.get_object_id_value(obj)
 
 
 class CategoryItemSerializer(serializers.ModelSerializer):
