@@ -18,3 +18,6 @@ class RetrieveUpdateDestroyCartView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         user = self.request.user
         return self.queryset.filter(user=user)
+    
+    def perform_destroy(self, instance):
+        instance.items.all().delete()
