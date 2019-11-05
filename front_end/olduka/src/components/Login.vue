@@ -63,7 +63,6 @@ export default {
           this.$toasted.error(
             'There was an error logging you in. Kindly check the credentials you\'ve provided and try again'
           )
-          this.error = err
         }
       )
     }
