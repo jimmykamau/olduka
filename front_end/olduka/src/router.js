@@ -58,9 +58,22 @@ let router = new Router({
       component: () => import('./components/ListCategoryItems.vue')
     },
     {
+      path: '/items',
+      name: 'items',
+      component: () => import('./components/ListItems.vue')
+    },
+    {
       path: '/item/:item_id',
       name: 'item-details',
       component: () => import('./components/SingleItem.vue')
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: () => import('./components/Cart.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '*',
