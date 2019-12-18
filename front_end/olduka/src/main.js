@@ -9,6 +9,7 @@ import router from './router'
 import store from './store'
 
 import Navbar from './components/Navbar.vue'
+import SideNav from './components/SideNav.vue'
 
 Vue.config.productionTip = false
 Vue.use(Toasted, { duration: 5000, keepOnHover: true })
@@ -32,11 +33,12 @@ if (userToken) {
       )
     }
   )
+} else {
+  store.commit('auth/logout')
 }
 
-store.dispatch('product/getCategories')
-
 Vue.component('navbar', Navbar)
+Vue.component('sidenav', SideNav)
 
 new Vue({
   router,

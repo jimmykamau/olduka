@@ -37,14 +37,15 @@ const mutations = {
   logout (state) {
     state.token = ''
     state.user = {}
-    VueCookies.remove('authToken')
-    VueCookies.remove('userDetails')
+    VueCookies.keys().forEach(
+      cookie => VueCookies.remove(cookie)
+    )
     delete axios.defaults.headers.common['Authorization']
   }
 }
 
 const actions = {
-  login ({ commit }, user) {
+  login ({ commit, dispatch }, user) {
     return new Promise((resolve, reject) => {
       axios({
         url: 'auth/login/',
@@ -54,6 +55,7 @@ const actions = {
         const token = resp.data.token
         const user = resp.data.user
         commit('auth_success', { token, user })
+        dispatch('cart/getCart', null, { root: true })
         resolve(resp)
       }).catch(err => {
         reject(err)

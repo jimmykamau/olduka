@@ -14,27 +14,21 @@
 
                     <div class="uk-navbar-center">
 
-                        <ul class="uk-navbar-nav uk-visible@m" v-for="category in productCategories" :key="category._id">
-                            <li>
-                              <a :href="`/category/${category._id}/items`">{{ category.name }}</a>
-                              <div class="uk-navbar-dropdown" v-if="category.subcategory.length">
-                                <ul class="uk-nav uk-navbar-dropdown-nav" v-for="subcategory in category.subcategory" :key="subcategory._id">
-                                  <router-link :to="`/category/${subcategory._id}/items`" tag="li"><a>{{ subcategory.name }}</a></router-link>
-                                </ul>
-                              </div>
-                            </li>
+                        <ul class="uk-navbar-nav uk-visible@m">
+                          <router-link to="/items" tag="li"><a>Shop</a></router-link>
+                          <li><a href="#">Blog</a></li>
                         </ul>
 
                     </div>
 
                     <div class="uk-navbar-right">
                         <a class="uk-navbar-toggle" href="#modal-full" uk-search-icon uk-toggle></a>
-                        <ul class="uk-navbar-nav">
+                        <ul class="uk-navbar-nav" v-if="isLoggedIn">
                             <li>
-                                <a href="#" class="tm-button-default uk-icon"><canvas uk-icon="icon: cart" width="20" height="20"></canvas></a>
-                                <div class="uk-navbar-dropdown">
-                                    <p>Your cart is empty</p>
-                                </div>
+                                <router-link to="/cart" tag="a" class="tm-button-default uk-icon">
+                                  <canvas uk-icon="icon: cart" width="20" height="20"></canvas>
+                                  <span class="uk-badge">{{ cart.items.length }}</span>
+                                </router-link>
                             </li>
                         </ul>
                         <div v-if="!isLoggedIn" class="uk-navbar-item uk-visible@m">
@@ -108,6 +102,9 @@ export default {
     }),
     ...mapGetters('product', {
       productCategories: 'productCategories'
+    }),
+    ...mapGetters('cart', {
+      cart: 'cart'
     })
   },
   methods: {

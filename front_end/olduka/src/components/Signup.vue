@@ -58,14 +58,7 @@ export default {
   },
   methods: {
     submit () {
-      var credentials = {
-        first_name: this.credentials.first_name,
-        last_name: this.credentials.last_name,
-        email: this.credentials.email,
-        password: this.credentials.password,
-        user_profile: this.credentials.user_profile
-      }
-      this.$store.dispatch('auth/signup', credentials).then(
+      this.$store.dispatch('auth/signup', this.credentials).then(
         () => this.$router.push('/successful-signup')
       ).catch(
         err => {
