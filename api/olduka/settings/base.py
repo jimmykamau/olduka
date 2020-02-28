@@ -113,6 +113,15 @@ DATABASES = {
         'USER': os.environ['MONGO_USERNAME'],
         'PASSWORD': os.environ['MONGO_PASSWORD'],
         'NAME': os.environ['MONGO_DATABASE'],
+        'CLIENT': {
+            'host': os.environ['MONGO_HOST'],
+            'port': int(os.environ['MONGO_PORT']),
+            'username': os.environ['MONGO_USERNAME'],
+            'password': os.environ['MONGO_PASSWORD'],
+        }
+    }
+}
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
