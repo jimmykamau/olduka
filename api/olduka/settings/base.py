@@ -66,7 +66,8 @@ INSTALLED_APPS = [
 
     'olduka.v1.authentication',
     'olduka.v1.product',
-    'olduka.v1.cart'
+    'olduka.v1.cart',
+    'olduka.v1.payment'
 ]
 
 MIDDLEWARE = [
@@ -111,8 +112,6 @@ DATABASES = {
     'default': dj_database_url.config(),
     'mongo_db': {
         'ENGINE': 'djongo',
-        'USER': os.environ['MONGO_USERNAME'],
-        'PASSWORD': os.environ['MONGO_PASSWORD'],
         'NAME': os.environ['MONGO_DATABASE'],
         'CLIENT': {
             'host': os.environ['MONGO_HOST'],
