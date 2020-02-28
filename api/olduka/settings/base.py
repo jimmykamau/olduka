@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
+    'django_celery_beat',
 
     'olduka.v1.authentication',
     'olduka.v1.product',
