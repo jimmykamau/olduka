@@ -259,4 +259,10 @@ EMAIL_VERIFICATION_SUCCESS_URL = "/login?emailConfirmation=true"
 EMAIL_VERIFICATION_ERROR_URL = "/email/error/"
 TOKEN_EXPIRED_URL = "/email/token-expired/"
 
+MPESA_CONSUMER_KEY = os.environ.get('MPESA_CONSUMER_KEY', None)
+MPESA_CONSUMER_SECRET = os.environ.get('MPESA_CONSUMER_SECRET', None)
+MPESA_BASE_URL = os.environ.get('MPESA_BASE_URL', None)
+MPESA_BUSINESS_SHORTCODE = os.environ.get('MPESA_BUSINESS_SHORTCODE', None)
+MPESA_ONLINE_PASSKEY = os.environ.get('MPESA_ONLINE_PASSKEY', None)
+
 SITE_ID = 1
