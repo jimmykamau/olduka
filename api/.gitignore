@@ -3,3 +3,6 @@ __pycache__/
 
 # Environments
 api.env
+
+# Celery-beat
+celerybeat.pid
