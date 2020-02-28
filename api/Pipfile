@@ -18,6 +18,7 @@ django-rest-swagger = "*"
 djongo = "*"
 factory-boy = "*"
 django-redis = "*"
+requests = "*"
 django-celery-beat = "*"
 
 [dev-packages]
