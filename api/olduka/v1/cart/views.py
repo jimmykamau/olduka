@@ -2,7 +2,6 @@ from rest_framework import generics, permissions
 
 import olduka.v1.cart.models as cart_models
 import olduka.v1.cart.serializers as cart_serializers
-from olduka.v1.cart import logger
 
 
 class CreateCartView(generics.CreateAPIView):
