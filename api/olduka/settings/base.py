@@ -254,6 +254,7 @@ CELERY_RESULT_BACKEND = os.environ.get(
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 EMAIL_VERIFICATION_SUCCESS_URL = "/login?emailConfirmation=true"
 EMAIL_VERIFICATION_ERROR_URL = "/email/error/"
