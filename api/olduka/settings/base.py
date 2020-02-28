@@ -113,10 +113,16 @@ DATABASES = {
         'USER': os.environ['MONGO_USERNAME'],
         'PASSWORD': os.environ['MONGO_PASSWORD'],
         'NAME': os.environ['MONGO_DATABASE'],
-        'HOST': os.environ['MONGO_HOST'],
-        'PORT': int(os.environ['MONGO_PORT'])
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get("REDIS_URL"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
     }
 }
+CACHE_TTL = 60 * 10
 
 
 # Password validation
