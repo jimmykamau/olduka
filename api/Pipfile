@@ -17,6 +17,7 @@ itsdangerous = "*"
 django-rest-swagger = "*"
 djongo = "*"
 factory-boy = "*"
+django-redis = "*"
 django-celery-beat = "*"
 
 [dev-packages]
