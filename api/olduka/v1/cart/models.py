@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
+from djongo import models
 
 import olduka.v1.product.models as product_models
-from djongo import models
 
 
 class CartItem(models.Model):
