@@ -69,6 +69,24 @@ services:
     command: >
       sh -c "celery -A olduka worker -l info"
   
+  celery_beat:
+    restart: on-failure
+    build:
+      context: ./api
+      dockerfile: DOCKERFILE-CELERY
+    env_file:
+      - ./api/api.env
+    volumes:
+      - ./api:/usr/src/api
+    depends_on:
+      - redis
+      - api
+      - celery
+    networks: 
+      - backend
+    command: >
+      sh -c "celery -A olduka beat -S django -l info"
+  
   front_end:
     restart: on-failure
     networks:
