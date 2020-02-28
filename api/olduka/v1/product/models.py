@@ -40,10 +40,10 @@ class Item(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     quantity = models.IntegerField()
-    images = models.ArrayModelField(
+    images = models.ArrayField(
         model_container=ProductImage
     )
-    price = models.EmbeddedModelField(
+    price = models.EmbeddedField(
         model_container=Price
     )
 
