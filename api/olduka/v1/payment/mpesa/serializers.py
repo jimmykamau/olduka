@@ -17,9 +17,10 @@ class InitiatePaymentSerializer(serializers.ModelSerializer):
         fields = (
             'invoice', 'invoice_id', 'phone_number'
         )
-    
+
     def create(self, validated_data):
-        invoice = payment_models.Invoice.objects.get(_id=validated_data['invoice_id'])
+        invoice = payment_models.Invoice.objects.get(
+            _id=validated_data['invoice_id'])
         instance, _ = mpesa_models.MpesaPayment.objects.get_or_create(
             invoice=invoice
         )

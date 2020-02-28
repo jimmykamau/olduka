@@ -16,12 +16,13 @@ class InvoiceViewTests(MongoDBTestClass):
     def setUp(self):
         self.user_profile = auth_factories.UserProfileFactory()
         self.client.force_authenticate(user=self.user_profile.user)
-        self.invoice = payment_factories.InvoiceFactory.build(user=self.user_profile.user)
+        self.invoice = payment_factories.InvoiceFactory.build(
+            user=self.user_profile.user)
         self.invoice_id = base_utils.get_object_id_value(self.invoice)
         self.url = reverse('v1:invoice')
 
     def tearDown(self):
         self.client.force_authenticate(user=None)
-    
+
     def test_create_invoice(self):
         logger.debug(self.invoice.__dict__)

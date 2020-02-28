@@ -3,7 +3,6 @@ from rest_framework.test import APITestCase
 
 import olduka.v1.product.tests.factories as product_factories
 import olduka.v1.utils as base_utils
-from olduka.v1.product import logger
 
 
 class MongoDBTestClass(APITestCase):
@@ -35,7 +34,7 @@ class GetCategoryViewTests(MongoDBTestClass):
                 'pk': base_utils.get_object_id_value(self.category)
             }
         )
-    
+
     def test_get_category(self):
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)

@@ -10,7 +10,7 @@ class InvoiceItemFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = payment_models.InvoiceItem
-    
+
     item = factory.SubFactory(product_factories.ItemFactory)
     quantity = factory.Faker('random_int', min=1, max=10)
 
@@ -19,11 +19,11 @@ class InvoiceFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = payment_models.Invoice
-    
+
     user = factory.SubFactory(auth_factories.UserFactory)
     status = 'OP'
     items = factory.RelatedFactoryList(InvoiceItemFactory, size=5)
-    
+
     @factory.post_generation
     def invoice_total(self, create, extracted, **kwargs):
         if not create:
