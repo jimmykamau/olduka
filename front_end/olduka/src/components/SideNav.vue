@@ -1,8 +1,8 @@
 <template>
   <div class="tm-sidebar-left uk-visible@m">
     <ul v-for="category in productCategories" :key="category._id" class="uk-nav uk-nav-default tm-nav">
-      <router-link :to="`/category/${category._id}/items`" class="uk-nav-header" tag="li"><a><b>{{category.name}}</b></a></router-link>                            
-      <router-link v-for="subcategory in category.subcategory" :key="subcategory._id" :to="`/category/${subcategory._id}/items`" tag="li"><a>{{subcategory.name}}</a></router-link>
+      <router-link :to="`/items/${category._id}`" class="uk-nav-header" tag="li"><a><b>{{category.name}}</b></a></router-link>                            
+      <router-link v-for="subcategory in category.subcategory" :key="subcategory._id" :to="`/items/${subcategory._id}`" tag="li"><a>{{subcategory.name}}</a></router-link>
     </ul>
   </div>
 </template>
