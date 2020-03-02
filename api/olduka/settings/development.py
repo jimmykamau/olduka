@@ -1,5 +1,3 @@
-import os
-
 from olduka.settings.base import *
 
 ALLOWED_HOSTS = ['*']

@@ -45,7 +45,7 @@
                     <div v-if="currentItem.quantity > 0">
                       <select class="uk-select uk-form-width-small" v-model="quantity">
                         <option value="1" disabled>Quantity: 1</option>
-                        <option v-for="i in currentItem.quantity" :value="i" :key="i">{{ i }}</option>
+                        <option v-for="i in currentItem.quantity > 10 ? 10 : currentItem.quantity" :value="i" :key="i">{{ i }}</option>
                       </select>
                     </div>
                     <div>

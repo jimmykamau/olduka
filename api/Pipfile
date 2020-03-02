@@ -17,11 +17,15 @@ itsdangerous = "*"
 django-rest-swagger = "*"
 djongo = "*"
 factory-boy = "*"
+django-redis = "*"
+requests = "*"
+django-celery-beat = "*"
 
 [dev-packages]
 pylint = "*"
 "pep8" = "*"
 autopep8 = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.6"

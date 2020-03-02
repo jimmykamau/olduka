@@ -62,10 +62,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
+    'django_celery_beat',
 
     'olduka.v1.authentication',
     'olduka.v1.product',
-    'olduka.v1.cart'
+    'olduka.v1.cart',
+    'olduka.v1.payment'
 ]
 
 MIDDLEWARE = [
@@ -110,13 +112,26 @@ DATABASES = {
     'default': dj_database_url.config(),
     'mongo_db': {
         'ENGINE': 'djongo',
-        'USER': os.environ['MONGO_USERNAME'],
-        'PASSWORD': os.environ['MONGO_PASSWORD'],
         'NAME': os.environ['MONGO_DATABASE'],
-        'HOST': os.environ['MONGO_HOST'],
-        'PORT': int(os.environ['MONGO_PORT'])
+        'CLIENT': {
+            'host': os.environ['MONGO_HOST'],
+            'port': int(os.environ['MONGO_PORT']),
+            'username': os.environ['MONGO_USERNAME'],
+            'password': os.environ['MONGO_PASSWORD'],
+        }
     }
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get("REDIS_URL"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+CACHE_TTL = 60 * 10
 
 
 # Password validation
@@ -245,18 +260,21 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 
 
-CELERY_BROKER_URL = os.environ.get(
-    'REDIS_URL', 'redis://redis:6379'
-)
-CELERY_RESULT_BACKEND = os.environ.get(
-    'REDIS_URL', 'redis://redis:6379'
-)
+CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 EMAIL_VERIFICATION_SUCCESS_URL = "/login?emailConfirmation=true"
 EMAIL_VERIFICATION_ERROR_URL = "/email/error/"
 TOKEN_EXPIRED_URL = "/email/token-expired/"
+
+MPESA_CONSUMER_KEY = os.environ.get('MPESA_CONSUMER_KEY', None)
+MPESA_CONSUMER_SECRET = os.environ.get('MPESA_CONSUMER_SECRET', None)
+MPESA_BASE_URL = os.environ.get('MPESA_BASE_URL', None)
+MPESA_BUSINESS_SHORTCODE = os.environ.get('MPESA_BUSINESS_SHORTCODE', None)
+MPESA_ONLINE_PASSKEY = os.environ.get('MPESA_ONLINE_PASSKEY', None)
 
 SITE_ID = 1
