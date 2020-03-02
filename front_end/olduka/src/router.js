@@ -53,13 +53,13 @@ let router = new Router({
       component: () => import('./components/ResendEmailConfirmation.vue')
     },
     {
-      path: '/category/:category_id/items',
-      name: 'list-category-items',
-      component: () => import('./components/ListCategoryItems.vue')
-    },
-    {
       path: '/items',
       name: 'items',
+      component: () => import('./components/ListItems.vue')
+    },
+    {
+      path: '/items/:category_id',
+      name: 'list-category-items',
       component: () => import('./components/ListItems.vue')
     },
     {
