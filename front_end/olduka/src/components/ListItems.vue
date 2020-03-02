@@ -48,6 +48,9 @@ export default {
   created () {
     this.getItems()
   },
+  watch: {
+    '$route': 'getItems'
+  },
   methods: {
     getItems () {
       this.loading = true
