@@ -4,6 +4,7 @@ WORKDIR /usr/src/front_end/olduka
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 COPY olduka/package*.json olduka/yarn.lock ./
 RUN yarn install
+RUN yarn upgrade
 
 WORKDIR /usr/src/front_end
 COPY . ./
