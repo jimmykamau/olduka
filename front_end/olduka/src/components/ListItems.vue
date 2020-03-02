@@ -6,7 +6,7 @@
     </div>
     <div v-else class="uk-container uk-container-small">
       <div uk-grid="masonry: true" class="uk-flex-center">
-        <div class="uk-flex uk-flex-center" v-for="item in allItems" :key="item._id">
+        <div class="uk-flex uk-flex-center" v-for="item in items" :key="item._id">
           <router-link :to="`/item/${item._id}`" class="uk-card uk-card-hover uk-link-toggle">
             <div class="uk-card-media-top">
               <img :src="item.images[0].image_url">
