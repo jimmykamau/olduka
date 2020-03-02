@@ -11,12 +11,13 @@
             <div class="uk-card-media-top">
               <img :src="item.images[0].image_url">
             </div>
-            <div class="uk-card-body">
+            <div class="uk-card-body uk-text-center">
               <h3 class="uk-card-title"><span class="uk-link-heading">{{ item.name }}</span></h3>
               <div>
                 <p>
                   <b v-if="item.price.discount > 0">
-                    <s><em> KES {{ item.price.price }}</em></s> KES {{ item.price.price - item.price.discount }}
+                    <s> KES {{ item.price.price }}</s> <br/>
+                    KES {{ item.price.price - item.price.discount }}
                   </b>
                   <b v-else>
                     KES {{ item.price.price }}
