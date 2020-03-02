@@ -51,6 +51,21 @@ export default {
   methods: {
     getItems () {
       this.loading = true
+      if (this.$route.params.category_id) {
+        this.$store.dispatch('product/getCategoryItems', this.$route.params.category_id).then(
+          () => {
+            this.loading = false
+            this.items = this.$store.getters['product/categoryItems'].category_item
+          }
+        ).catch(
+          err => {
+            this.$toasted.error(
+              'There was an error fetching items in the category. Kindly try again later'
+            )
+            this.$router.go(-1)
+          }
+        )
+      } else {
       this.$store.dispatch('product/getItems').then(
         () => {
           this.loading = false
