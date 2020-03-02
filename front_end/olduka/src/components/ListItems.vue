@@ -33,18 +33,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
   data () {
     return {
-      loading: false
+      loading: false,
+      items: ''
     }
-  },
-  computed: {
-    ...mapGetters('product', {
-      allItems: 'allItems'
-    })
   },
   created () {
     this.getItems()
@@ -70,18 +65,20 @@ export default {
           }
         )
       } else {
-      this.$store.dispatch('product/getItems').then(
-        () => {
-          this.loading = false
-        }
-      ).catch(
-        err => {
-          this.$toasted.error(
-            'There was an error fetching items. Kindly try again later'
-          )
-          this.$router.go(-1)
-        }
-      )
+        this.$store.dispatch('product/getItems').then(
+          () => {
+            this.loading = false
+            this.items = this.$store.getters['product/allItems']
+          }
+        ).catch(
+          err => {
+            this.$toasted.error(
+              'There was an error fetching items. Kindly try again later'
+            )
+            this.$router.go(-1)
+          }
+        )
+      }
     }
   }
 }
