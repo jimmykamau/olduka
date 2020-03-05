@@ -74,7 +74,14 @@ const actions = {
 }
 
 const getters = {
-  cart: state => state.cart
+  cart: state => state.cart,
+  cartTotal: state => {
+    let total = 0
+    Object.entries(state.cart.items).forEach(([index, product]) => {
+      total += (product.item.price.price - product.item.price.discount) * product.quantity
+    })
+    return total
+  }
 }
 
 export default {

@@ -34,13 +34,13 @@
               </tr>
               <tr>
                 <td style="text-align: right" colspan="6">
-                  <h3>Total: KES {{ getCartTotal() }}</h3>
+                  <h3>Total: KES {{ cartTotal }}</h3>
                 </td>
               </tr>
             </tbody>
           </table>
           <p class="uk-text-right" uk-margin>
-            <button class="uk-button uk-button-primary uk-button-large uk-border-pill">Checkout</button>
+            <button class="uk-button uk-button-primary uk-button-large uk-border-pill" @click="checkout()">Checkout</button>
           </p>
         </div>
         <div class="uk-text-center" v-else>
@@ -58,22 +58,19 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters('cart', {
-      cart: 'cart'
+      cart: 'cart',
+      cartTotal: 'cartTotal'
     })
   },
   methods: {
-    getCartTotal () {
-      let total = 0
-      Object.entries(this.cart.items).forEach(([index, product]) => {
-        total += (product.item.price.price - product.item.price.discount) * product.quantity
-      })
-      return total
-    },
     updateItemQuantity (item, e) {
       this.$store.commit('cart/updateCartItemQuantity', { item: item, quantity: e.target.value })
     },
     removeItem (index) {
       this.$store.commit('cart/removeItemFromCart', index)
+    },
+    checkout () {
+      this.$router.push('checkout')
     }
   },
   beforeDestroy () {
