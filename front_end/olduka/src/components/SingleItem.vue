@@ -22,14 +22,15 @@
                   <a class="uk-slidenav-large uk-position-center-right uk-position-small" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
                 </div>
               </div>
-              <div class="uk-flex uk-flex-column uk-flex-middle uk-flex-center">
+              <div class="uk-flex uk-flex-column uk-flex-middle uk-flex-center uk-text-center">
                 <div>
                   <h1 class="uk-heading-small">{{ currentItem.name }}</h1>
                 </div>
                 <div>
-                  <p class="uk-h3">
+                  <p class="uk-h4">
                     <b v-if="currentItem.price.discount > 0">
-                      <s><em> KES {{ currentItem.price.price }}</em></s> KES {{ currentItem.price.price - currentItem.price.discount }}
+                      <s> KES {{ currentItem.price.price }}</s>
+                      KES {{ currentItem.price.price - currentItem.price.discount }}
                     </b>
                     <b v-else>KES {{ currentItem.price.price }}</b>
                   </p>
@@ -40,21 +41,21 @@
                     <em v-else>{{ currentItem.quantity }} left in stock</em>
                   </p>
                 </div>
-                <div class="uk-flex@m uk-flex-middle@m">
-                  <div v-if="isLoggedIn" uk-grid>
-                    <div v-if="currentItem.quantity > 0">
-                      <select class="uk-select uk-form-width-small" v-model="quantity">
-                        <option value="1" disabled>Quantity: 1</option>
+                <div v-if="isLoggedIn">
+                  <div v-if="currentItem.quantity > 0">
+                    <form class="uk-form-stacked" v-on:submit.prevent>
+                      <label for="quantity" class="uk-form-label">Quantity</label>
+                      <select class="uk-select uk-form-width-small" id="quantity" v-model="quantity">
                         <option v-for="i in currentItem.quantity > 10 ? 10 : currentItem.quantity" :value="i" :key="i">{{ i }}</option>
                       </select>
-                    </div>
-                    <div>
-                      <button v-if="isLoggedIn" class="uk-button tm-button-large uk-button-primary" style="border-radius: 500px" :disabled="currentItem.quantity === 0" @click="addToCart()">Add to cart</button>
-                    </div>
+                    </form>
                   </div>
-                  <div v-else>
-                    <p>Kindly <router-link to="/signup">sign up</router-link>/<router-link :to="{ name: 'login', query: { nextURL: currentRoute } }">log in</router-link> to purchase</p>
-                  </div>
+                </div>
+                <div v-else>
+                  <p>Kindly <router-link to="/signup">sign up</router-link>/<router-link :to="{ name: 'login', query: { nextURL: currentRoute } }">log in</router-link> to purchase</p>
+                </div>
+                <div class="uk-margin-top">
+                  <button v-if="isLoggedIn" class="uk-button tm-button-large uk-button-primary" style="border-radius: 500px" :disabled="currentItem.quantity === 0" @click="addToCart()">Add to cart</button>
                 </div>
               </div>
             </div>
