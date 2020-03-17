@@ -29,7 +29,7 @@ let router = new Router({
     {
       path: '/checkout',
       name: 'checkout',
-      component: () => import('./views/Checkout.vue'),
+      component: () => import('./components/Checkout.vue'),
       meta: {
         requiresAuth: true
       }
